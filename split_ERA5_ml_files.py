@@ -1,9 +1,12 @@
 # splits ERA5 model level files with multiple hourly time steps in individual files with one timestep
+# original filename: ERA5_ml_[var]_[date].grb
 # written by K.: Barfus 9/2019
 import os
 import glob
+import sys
 
-path = "/scratch/ws/0/barfus-BerlinStorms2/BerlinStorms/ERA5/"
+path = sys.argv[1]
+#path = "/scratch/ws/0/barfus-BerlinStorms2/BerlinStorms/ERA5/"
 
 vars = ['129','130','131','132','133']
 n_vars = len(vars)
