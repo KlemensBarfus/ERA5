@@ -1,5 +1,7 @@
 # splits ERA5 model level files with multiple hourly time steps in individual files with one timestep
-# original filename: ERA5_ml_[var]_[date].grb
+# original filename: ERA5_ml_[var]_[date]_[annotation, e.g Berlin, not completely numeric, without "_"].grb (annotation can be skipped) 
+# output filename: ERA5_ml_[var]_[date]_[hour]_[annotation, e.g Berlin, but without "_"].grb 
+
 # written by K.: Barfus 9/2019
 import os
 import glob
@@ -15,20 +17,31 @@ for i_vars in range(0, n_vars):
   # get list of files
   test_str = "ERA5_ml_"+vars[i_vars]+"_*.grb"
   all_files = glob.glob(path+test_str)
-  # test which file is relevant (not already an output file)
-  for i_files in range(0, len(all_files)):
-    test_string = all_files[i_files]
-    test_string2 = test_string.split("/")
-    test_string3 = test_string2[len(test_string2)-1]
-    if(len(test_string3) == 24): # file is relevant
-      print(test_string3)
-      # test if already results exist
-      #tt = path+test_string3[0:20]+"*.grb"
-      #print(tt)
-      test_files = glob.glob(path+test_string3[0:20]+"_*.grb")
-      if(len(test_files) == 0):
-        sys_cmd = "cdo splithour "+test_string+" "+path+test_string3[0:20]+"_"    
-        print(sys_cmd)
-        os.system(sys_cmd)
-      sys_cmd = "mv "+test_string+" "+path+"original_files"
-      os.system(sys_cmd) 
+  if(len(all_files) > 0): # relevant files exist
+    # test which file is relevant (not already an output file)
+    for i_files in range(0, len(all_files)):
+      test_string = all_files[i_files]
+      test_string2 = test_string.split("/")
+      filename_with_ending = test_string2[len(test_string2)-1]
+      filename = filename_with_ending.split(".")[0]
+      filename_parts = filename.split("_")
+      valid = False
+      n_filename_parts = len(filename_parts)
+      if(n_filename_parts) == 3):
+        valid = True
+      else:
+        if(filename_parts.isnumeric() == False):
+          valid = True
+      if(valid == True):
+        # test if results already exist
+        test_files = glob.glob(path+"_".join(filename_parts[0:3])+"_*_"+filename_parts[len(filename_parts)-1]+".grb")
+        if(len(test_files) == 0):
+          sys_cmd = "cdo splithour "+all_files[i_files]+" "+path+"_".join(filename_parts[0:3])   
+          print(sys_cmd)
+          # os.system(sys_cmd)
+          if(n_filename_parts > 3):
+            new_files = glob.glob(path+"_".join(filename_parts[0:3])+"*"+".grb")
+            for new_file in new_files:
+              filename_new_parts
+          sys_cmd = "mv "+test_string+" "+path+"original_files"
+          os.system(sys_cmd) 
