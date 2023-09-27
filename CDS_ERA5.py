@@ -380,7 +380,7 @@ def get_levels(res, level_in):
         temp_str = level_in.split(',')
         res_temp = []
         for i in range(0, len(temp_str)):
-          res_temp.append("'"+temp_str[i]+"',")
+          res_temp.append(temp_str[i])
         res['pressure_level'] = res_temp
       else:
         if(level_in.isnumeric()): # one pressure level from CDS
