@@ -1,0 +1,7 @@
+GRIB1| Level| Level| Level| metgrid  | metgrid  | metgrid                                  |GRIB2|GRIB2|GRIB2|GRIB2| 
+PARAM| Code |   1  |   2  | Name     | Units    | Description                              |Discp|Catgy|Param|Level| 
+-----+------+------+------+----------+----------+------------------------------------------+-----+-----+-----+-----+ 
+ 129 |  1   |   0  |      | SOILGEO  | m        |                                          |  0  |  3  |  4  | 105 |
+     |  1   |   0  |      | SOILHGT  | m        | Terrain field of source analysis         |  0  |  3  |  5  | 105 |  
+-----+------+------+------+----------+----------+------------------------------------------+-----+-----+-----+-----+
+
